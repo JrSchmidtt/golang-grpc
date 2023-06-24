@@ -2,11 +2,13 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"net"
 
 	"github.com/JrSchmidtt/golang-grpc/src/database"
 	"github.com/JrSchmidtt/golang-grpc/src/pb"
 	"github.com/JrSchmidtt/golang-grpc/src/service"
+	_ "github.com/mattn/go-sqlite3"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 )
@@ -43,4 +45,5 @@ func main() {
 	if err := grpcServer.Serve(listener); err != nil {
 		panic(err)
 	}
+	fmt.Println("Server running on port :50051")
 }

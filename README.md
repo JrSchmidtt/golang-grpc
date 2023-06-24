@@ -35,5 +35,14 @@ export PATH="$PATH:$(go env GOPATH)/bin"
 
 ## Generate gRPC code
 ```
-protoc --go_out-. --go-grpc_out=. proto/category.proto
+protoc --go_out=. --go-grpc_out=. proto/*.proto
+```
+
+## SQL Script for SQLite3
+```
+create table category (
+    id string,
+    name string,
+    description string,
+);
 ```

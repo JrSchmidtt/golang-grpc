@@ -19,7 +19,7 @@ func NewCategoryService(categoryDB database.Category) *CategoryService {
 }
 
 // CreateCategory is a function handler that creates a new category
-func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCategoryRequest) (*pb.CategoryResponse, error) {
+func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCategoryRequest) (*pb.Category, error) {
 	category, err := c.CategoryDB.Create(in.Name, in.Description)
 	if err != nil {
 		return nil, err
@@ -31,5 +31,25 @@ func (c *CategoryService) CreateCategory(ctx context.Context, in *pb.CreateCateg
 		Description: category.Description,
 	}
 
-	return &pb.CategoryResponse{Category: categoryResponse}, nil
+	return categoryResponse, nil
+}
+
+// ListCategories is a function handler that lists all categories
+func (c *CategoryService) ListCategories(ctx context.Context, in *pb.Blank) (*pb.CategoryList, error) {
+	categories, err := c.CategoryDB.FindAll()
+	if err != nil {
+		return nil, err
+	}
+
+	var categoryList []*pb.Category
+
+	for _, category := range categories {
+		categoryList = append(categoryList, &pb.Category{
+			Id:          category.ID,
+			Name:        category.Name,
+			Description: category.Description,
+		})
+	}
+
+	return &pb.CategoryList{Categories: categoryList}, nil
 }

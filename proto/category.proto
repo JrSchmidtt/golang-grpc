@@ -2,11 +2,14 @@ syntax = "proto3";
 package pb;
 option go_package = "src/pb";
 
+// Empty represents an empty message for use with RPCs
+message blank {}
+
 // Category represents a category of content
 message Category {
     string id = 1;
     string name = 2;
-    string description = 3;
+    string description = 4;
 }
 
 // CreateCategoryRequest represents a request to create a category
@@ -15,12 +18,13 @@ message CreateCategoryRequest {
     string description = 2;
 }
 
-// CategoryResponse represents a response to a category request
-message CategoryResponse {
-    Category category = 1;
+// CategoryList represents a list of categories of content
+message CategoryList {
+    repeated Category categories = 1;
 }
 
 // CategoryService represents a service for managing categories
 service CategoryService {
-    rpc CreateCategory(CreateCategoryRequest) returns (CategoryResponse);
+    rpc CreateCategory(CreateCategoryRequest) returns (Category);
+    rpc ListCategories(blank) returns (CategoryList);
 }
