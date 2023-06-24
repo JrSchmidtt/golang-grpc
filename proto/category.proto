@@ -1,0 +1,26 @@
+syntax = "proto3";
+package pb;
+option go_package = "src/pb";
+
+// Category represents a category of content
+message Category {
+    string id = 1;
+    string name = 2;
+    string description = 3;
+}
+
+// CreateCategoryRequest represents a request to create a category
+message CreateCategoryRequest {
+    string name = 1;
+    string description = 2;
+}
+
+// CategoryResponse represents a response to a category request
+message CategoryResponse {
+    Category category = 1;
+}
+
+// CategoryService represents a service for managing categories
+service CategoryService {
+    rpc CreateCategory(CreateCategoryRequest) returns (CategoryResponse);
+}
